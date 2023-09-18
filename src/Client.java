@@ -17,7 +17,7 @@ public class Client {
         // Attente de la réception d'un message envoyé par le, server sur le canal
         String helloMessageFromServer = in.readUTF();
         System.out.println(helloMessageFromServer);
-        // fermeture de La connexion avec le serveur
+        // Fermeture de La connexion avec le serveur
         socket.close();
     }
 }
