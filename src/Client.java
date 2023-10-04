@@ -10,8 +10,8 @@ public class Client {
     public static void main(String[] args) throws Exception {
         // Récupération de l'IP:Port du serveur
         Scanner scannerClient = new Scanner(System.in);
-        String serverAddress = Util.getValidIPClient(scannerClient);
-        int port = Util.getValidPortClient(scannerClient, 5000, 5050);
+        String serverAddress = Util.getValidIP(scannerClient);
+        int port = Util.getValidPort(scannerClient, 5000, 5050);
 
         // Création d'une nouvelle connexion aves le serveur
         Socket socket = new Socket(serverAddress, port);
@@ -32,7 +32,7 @@ public class Client {
                     String clientResponse = scannerAnswer.nextLine();
                     out.writeUTF(clientResponse);
                 }
-                if (serverMessage.endsWith("image.")) {
+                if (serverMessage.endsWith("traitement d'image.")) {
                     System.out.print("\nEntrez le nom de l'image: ");
                     String nameImage = scannerAnswer.next();
                     BufferedImage image = Util.loadImage(nameImage);
@@ -50,7 +50,7 @@ public class Client {
                     Util.saveImage(filteredImage);
                 }
             } catch (IOException e) {
-                System.out.println("La connexion est close.");
+                System.out.println("La connexion avec le serveur est close.");
                 break;
             }
         }

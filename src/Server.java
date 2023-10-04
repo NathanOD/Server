@@ -13,13 +13,13 @@ public class Server {
     public static void main(String[] args) throws Exception {
         // Compteur incrémenté à chaque connexion d'un client au serveur
         int clientNumber = 0;
-        // Base de données utilisateurs
+        // Chargement de la base de données utilisateurs
         pathCSV = Paths.get("user_database.csv");
         userData = Util.readCSV(pathCSV);
-        // Adresse et port du serveur
+        // Choix des adresse et port du serveur
         Scanner scannerServer = new Scanner(System.in);
-        String serverAddress = Util.getValidIPServer(scannerServer); // 127.0.0.1
-        int serverPort = Util.getValidPortServer(scannerServer, 5000, 5050); // 5000
+        String serverAddress = Util.getValidIP(scannerServer); // 127.0.0.1
+        int serverPort = Util.getValidPort(scannerServer, 5000, 5050); // 5000
         // Création de la connexien pour communiquer ave les, clients
         ServerSocket listener = new ServerSocket();
         listener.setReuseAddress(true);

@@ -4,10 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.Files;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.nio.file.Paths;
 
 public final class Util {
     public static String[][] readCSV(Path pathCSV) throws IOException {
@@ -61,42 +61,7 @@ public final class Util {
         // Fermer le fichier
         buffWriter.close();
     }
-    public static String getValidIPServer(Scanner scanner) {
-        String ipPattern = "^([0-9]{1,3}\\.){3}[0-9]{1,3}$";
-        Pattern pattern = Pattern.compile(ipPattern);
-
-        while (true) {
-            System.out.print("Entrez l'adresse IP: ");
-
-            if (scanner.hasNext()) {
-                String userInputIP = scanner.next();
-                Matcher matcher = pattern.matcher(userInputIP);
-
-                if (matcher.matches()) {
-                    String[] parts = userInputIP.split("\\.");
-                    boolean valid = true;
-
-                    for (String part : parts) {
-                        int value = Integer.parseInt(part);
-                        if (value < 0 || value > 255) {
-                            valid = false;
-                            break;
-                        }
-                    }
-
-                    if (valid) {
-                        ClientHandler.ipAddress = userInputIP;
-                        return userInputIP;
-                    } else {
-                        System.out.println("IP invalide.");
-                    }
-                } else {
-                    System.out.println("IP invalide.");
-                }
-            }
-        }
-    }
-    public static String getValidIPClient(Scanner scanner) {
+    public static String getValidIP(Scanner scanner) {
         String ipPattern = "^([0-9]{1,3}\\.){3}[0-9]{1,3}$";
         Pattern pattern = Pattern.compile(ipPattern);
 
@@ -130,24 +95,7 @@ public final class Util {
             }
         }
     }
-    public static int getValidPortServer(Scanner scanner, int minPort, int maxPort) {
-        while (true) {
-            System.out.print("Entrez le port: ");
-            if (scanner.hasNextInt()) {
-                int userInputPort = scanner.nextInt();
-                if (userInputPort >= minPort && userInputPort <= maxPort) {
-                    ClientHandler.port = userInputPort;
-                    return userInputPort;
-                } else {
-                    System.out.println("Port invalide. Le port doit être compris entre " + minPort + " et " + maxPort + ".");
-                }
-            } else {
-                System.out.println("Port invalide. Veuillez entrer un nombre entre " + minPort + " et " + maxPort + ".");
-                scanner.next();
-            }
-        }
-    }
-    public static int getValidPortClient(Scanner scanner, int minPort, int maxPort) {
+    public static int getValidPort(Scanner scanner, int minPort, int maxPort) {
         while (true) {
             System.out.print("Entrez le port: ");
             if (scanner.hasNextInt()) {
@@ -246,16 +194,16 @@ public final class Util {
         return image;
     }
     public static void saveImage(BufferedImage image) {
-        System.out.print("Veuillez entrer le chemin du fichier de sortie (ex: image.jpg) : ");
+        System.out.print("Veuillez entrer le chemin où enregistrer l'image filtrée (ex: image.jpg): ");
         Scanner scanner = new Scanner(System.in);
         Path outputPath = Paths.get(scanner.nextLine());
         try {
             File outputFile = new File(outputPath.toUri());
             ImageIO.write(image, "JPEG", outputFile);
-            System.out.println("L'image a été enregistrée à cet emplacement : " + outputPath);
+            System.out.println("L'image a été enregistrée à cet emplacement: " + outputPath);
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Une erreur s'est produite lors de l'enregistrement de l'image à cet emplacement : " + outputPath);
+            System.err.println("Une erreur s'est produite lors de l'enregistrement de l'image à cet emplacement: " + outputPath);
         }
     }
     public static byte[] imageToByte(BufferedImage image) {
