@@ -6,17 +6,31 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ClientHandler extends Thread { // pour traiter la demande de chaque client sur un socket particulier
+/**
+ * La classe ClientHandler est responsable du traitement des demandes de chaque client sur un socket particulier.
+ */
+public class ClientHandler extends Thread {
     private final Socket socket;
     private final int clientNumber;
     public static Boolean isAuthenticated;
     public static String username;
+
+    /**
+     * Constructeur de la classe ClientHandler.
+     *
+     * @param socket       Le socket de communication avec le client.
+     * @param clientNumber Le numéro d'identification du client.
+     */
     public ClientHandler(Socket socket, int clientNumber) {
         this.socket = socket;
         this.clientNumber = clientNumber;
-        System.out.println("New connection with client#" + clientNumber + " at " + socket);
+        System.out.println("Nouvelle connexion avec le client#" + clientNumber + " à " + socket);
     }
-    public void run() { // Création de thread qui envoi un message à un client
+
+    /**
+     * Méthode principale de traitement des demandes du client.
+     */
+    public void run() {
         isAuthenticated = false;
 
         // Connexion du client
@@ -25,20 +39,15 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             Server.userData = Util.authenticateUser(Server.userData, inputStream, outputStream);
             if (!isAuthenticated) {
-                System.out.println("Authentication failed for client#" + clientNumber);
+                System.out.println("Échec de l'authentification pour le client#" + clientNumber);
                 socket.close();
                 return;
             } else {
-                System.out.println("Authentication succeed for client#" + clientNumber);
+                System.out.println("Authentification réussie pour le client#" + clientNumber);
+                outputStream.writeUTF("Bonjour depuis le serveur - vous êtes le client#" + clientNumber + "\n");
             }
         } catch (IOException e) {
-            System.out.println("Error handling client# " + clientNumber + ": " + e);
-        }
-        try {
-            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream()); // création de canal d’envoi
-            outputStream.writeUTF("Hello from server - you are client#" + clientNumber + "\n"); // envoi de message
-        } catch (IOException e) {
-            System.out.println("Error handling client# " + clientNumber + ": " + e);
+            System.out.println("Erreur d'authentification du client# " + clientNumber + ": " + e);
         }
 
         // Traitement de l'image
@@ -65,27 +74,26 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
 
             BufferedImage filteredImage = Sobel.process(originalImage);
             byte[] filteredTable = Util.imageToByte(filteredImage);
-            outputStream.writeUTF("Reception de l'image '" + imageName + "' filtrée depuis le serveur.");
+            outputStream.writeUTF("Réception de l'image '" + imageName + "' filtrée depuis le serveur.");
             outputStream.writeInt(filteredTable.length);
             outputStream.write(filteredTable);
-            System.out.println("Image '" + imageName + "' successfully sent to client#" + clientNumber);
-            outputStream.writeUTF("Image reçue !\n");
+            System.out.println("Image '" + imageName + "' envoyée avec succès au client#" + clientNumber);
         } catch (IOException e) {
-            System.out.println("Error with image of client# " + clientNumber + ": " + e);
+            System.out.println("Erreur avec l'image du client# " + clientNumber + ": " + e);
         }
 
         // Fermeture du socket
-        finally{
+        finally {
             try {
                 socket.close();
             } catch (IOException e) {
-                System.out.println("Couldn't close a socket, what's going on?");
+                System.out.println("Impossible de fermer le socket, que se passe-t-il ?");
             }
-            System.out.println("Connection with client# " + clientNumber + " closed");
+            System.out.println("Connexion avec le client#" + clientNumber + " fermée");
             try {
                 Util.saveCSV(Server.userData, Server.pathCSV);
             } catch (IOException e) {
-                System.out.println("Failed to save CSV.");
+                System.out.println("Échec de l'enregistrement du CSV.");
             }
         }
     }

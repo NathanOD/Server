@@ -1,8 +1,17 @@
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * La classe Sobel implémente l'algorithme de détection de contours Sobel.
+ */
 public class Sobel {
-
+    /**
+     * Applique le filtre de Sobel à une image pour détecter les contours.
+     *
+     * @param image L'image à traiter.
+     * @return L'image avec les contours détectés.
+     * @throws IOException Si une erreur d'entrée/sortie se produit.
+     */
     public static BufferedImage process(BufferedImage image) throws IOException
     {
         System.out.println("applying filter");
@@ -65,7 +74,14 @@ public class Sobel {
 
         return image;
     }
-
+    /**
+     * Remplit la bordure de l'image avec des pixels noirs.
+     *
+     * @param image L'image à traiter.
+     * @param x     La largeur de l'image.
+     * @param y     La hauteur de l'image.
+     * @return L'image avec la bordure remplie de zéros.
+     */
     private static BufferedImage fillOutlineWithZeros(BufferedImage image, int x, int y)
     {
         for (int i = 0; i < x; i++)
@@ -82,7 +98,12 @@ public class Sobel {
 
         return image;
     }
-
+    /**
+     * Convertit une couleur RGB en niveau de gris.
+     *
+     * @param rgb La couleur en format RGB.
+     * @return La valeur de gris correspondante.
+     */
     private static int getGrayScale(int rgb)
     {
         int r = (rgb >> 16) & 0xff;
