@@ -1,3 +1,5 @@
+package server;
+
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -7,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * La classe ClientHandler est responsable du traitement des demandes de chaque client sur un socket particulier.
+ * La classe server.ClientHandler est responsable du traitement des demandes de chaque client sur un socket particulier.
  */
 public class ClientHandler extends Thread {
     private final Socket socket;
@@ -16,7 +18,7 @@ public class ClientHandler extends Thread {
     public static String username;
 
     /**
-     * Constructeur de la classe ClientHandler.
+     * Constructeur de la classe server.ClientHandler.
      *
      * @param socket       Le socket de communication avec le client.
      * @param clientNumber Le numéro d'identification du client.

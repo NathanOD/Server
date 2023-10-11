@@ -1,16 +1,17 @@
+package server;
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.Files;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 /**
- * La classe Util contient des méthodes utilitaires pour diverses opérations.
+ * La classe server.Util contient des méthodes utilitaires pour diverses opérations.
  */
 public final class Util {
     /**
@@ -214,45 +215,6 @@ public final class Util {
         }
 
         return userData;
-    }
-    /**
-     * Charge une image à partir d'un fichier.
-     *
-     * @param nameImage Le nom du fichier image.
-     * @return L'image chargée en mémoire.
-     */
-    public static BufferedImage loadImage(String nameImage) {
-        BufferedImage image = null;
-        Path imagePath = Paths.get(nameImage);
-        try {
-            if (imagePath.toFile().exists()) {
-                image = ImageIO.read(imagePath.toFile());
-                System.out.println("L'image '" + nameImage + "' a été chargée avec succès.");
-            } else {
-                System.out.println("Le fichier spécifié n'existe pas: " + nameImage);
-            }
-        } catch (IOException e) {
-            System.out.println("Une erreur s'est produite lors du chargement de l'image: " + e.getMessage());
-        }
-        return image;
-    }
-    /**
-     * Enregistre une image dans un fichier.
-     *
-     * @param image L'image à enregistrer.
-     */
-    public static void saveImage(BufferedImage image) {
-        System.out.print("Veuillez entrer le chemin où enregistrer l'image filtrée (ex: image.jpg): ");
-        Scanner scanner = new Scanner(System.in);
-        Path outputPath = Paths.get(scanner.nextLine());
-        try {
-            File outputFile = new File(outputPath.toUri());
-            ImageIO.write(image, "JPEG", outputFile);
-            System.out.println("L'image a été enregistrée à cet emplacement: " + outputPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Une erreur s'est produite lors de l'enregistrement de l'image à cet emplacement: " + outputPath);
-        }
     }
     /**
      * Convertit une image en tableau de bytes.

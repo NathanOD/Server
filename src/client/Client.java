@@ -1,3 +1,5 @@
+package client;
+
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -6,7 +8,7 @@ import java.util.Scanner;
 import java.awt.image.BufferedImage;
 
 /**
- * La classe Client représente une application cliente.
+ * La classe client.Client représente une application cliente.
  */
 public class Client {
     /**
@@ -23,7 +25,7 @@ public class Client {
 
         // Création d'une nouvelle connexion avec le serveur
         Socket socket = new Socket(serverAddress, port);
-        System.out.format("Client lancé sur [%s:%d]\n", serverAddress, port);
+        System.out.format("client.Client lancé sur [%s:%d]\n", serverAddress, port);
 
         // Création d'un canal entrant pour recevoir les messages envoyés par le serveur
         DataInputStream in = new DataInputStream(socket.getInputStream());

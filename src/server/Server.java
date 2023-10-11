@@ -1,3 +1,5 @@
+package server;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -7,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
- * La classe Server représente une application serveur.
+ * La classe server.Server représente une application serveur.
  */
 public class Server {
     /**
@@ -49,7 +51,7 @@ public class Server {
         System.out.format("Le serveur est en cours d'exécution sur %s:%d%n", serverAddress, serverPort);
 
         try {
-            // À chaque fois qu'un nouveau client se connecte, on exécute la fonction run() de l'objet ClientHandler
+            // À chaque fois qu'un nouveau client se connecte, on exécute la fonction run() de l'objet server.ClientHandler
             while (true) {
                 // Important : la fonction accept() est bloquante : elle attend qu'un prochain client se connecte
                 // Une nouvelle connexion : on incrémente le compteur clientNumber
@@ -63,7 +65,7 @@ public class Server {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Erreur dans le lancement du ClientHandler");
+            System.out.println("Erreur dans le lancement du server.ClientHandler");
         } finally {
             // Fermeture de la connexion
             listener.close();

@@ -1,12 +1,14 @@
+package server;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
- * La classe Sobel implémente l'algorithme de détection de contours Sobel.
+ * La classe server.Sobel implémente l'algorithme de détection de contours server.Sobel.
  */
 public class Sobel {
     /**
-     * Applique le filtre de Sobel à une image pour détecter les contours.
+     * Applique le filtre de server.Sobel à une image pour détecter les contours.
      *
      * @param image L'image à traiter.
      * @return L'image avec les contours détectés.
